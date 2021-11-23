@@ -3,7 +3,7 @@ import {Observable} from 'rxjs';
 import {Product} from '../common/product';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
-import {ProductCategory} from "../common/product-category";
+import {ProductCategory} from '../common/product-category';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +21,14 @@ export class ProductServiceService {
     const searchUrl = `${this.baseUrl}/search/findByCategoryId?id=${id}`;
 
     return this.getProducts(searchUrl);
+  }
+
+  getProductListPaginate(page: number,
+                         pageSize: number,
+                         categoryId: number): Observable<GetResponseProducts> {
+    const searchUrl = `${this.baseUrl}/search/findByCategoryId?id=${categoryId}&page=${page}&size=${pageSize}`;
+
+    return this.httpClient.get<GetResponseProducts>(searchUrl);
   }
 
   getProductCategories(): Observable<ProductCategory[]> {
@@ -51,6 +59,12 @@ export class ProductServiceService {
 interface GetResponseProducts {
   _embedded: {
     products: Product[];
+  };
+  page: {
+    size: number,
+    totalElements: number,
+    totalPages: number,
+    number: number
   };
 }
 
