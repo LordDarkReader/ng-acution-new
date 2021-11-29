@@ -59,4 +59,24 @@ export class CartService {
     console.log(`totalPrice: ${totalPriceValue.toFixed(2)}, totalQuantity: ${totalQuantityValue}`);
     console.log('-----');
   }
+
+  decrementQuantity(tempCartItem: CartItem) {
+    tempCartItem.quantity--;
+
+    if (tempCartItem.quantity === 0) {
+      this.remove(tempCartItem);
+    } else {
+      this.computeCartTotals();
+    }
+
+  }
+
+  remove(tempCartItem: CartItem) {
+    const itemIndex = this.cartItems.findIndex(data => data.id = tempCartItem.id);
+
+    if (itemIndex > -1) {
+      this.cartItems.splice(itemIndex, 1);
+      this.computeCartTotals();
+    }
+  }
 }
