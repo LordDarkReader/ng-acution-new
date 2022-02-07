@@ -4,6 +4,7 @@ import {AppFormServiceService} from 'src/app/services/app-form-service.service';
 import {Country} from 'src/app/common/country';
 import {State} from 'src/app/common/state';
 import {ShopValidators} from 'src/app/validators/shop-validators';
+import {CartService} from 'src/app/services/cart.service';
 
 @Component({
   selector: 'nga-checkout',
@@ -23,11 +24,12 @@ export class CheckoutComponent implements OnInit {
 
   // const EMAILVALIDPATTERN = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
 
-  constructor(private formBuilder: FormBuilder, private appFormService: AppFormServiceService) {
+  constructor(private formBuilder: FormBuilder, private appFormService: AppFormServiceService, private cartService: CartService) {
   }
 
   ngOnInit(): void {
 
+    this.reviewCartDetails();
 
     this.checkoutFormGroup = this.formBuilder.group({
       customer: this.formBuilder.group({
@@ -43,17 +45,17 @@ export class CheckoutComponent implements OnInit {
         zipCode: new FormControl('', [Validators.required, Validators.minLength(2), ShopValidators.notOnlyWhitespace])
       }),
       billingAddress: this.formBuilder.group({
-        street: [''],
-        city: [''],
-        state: [''],
-        country: [''],
-        zipCode: [''],
+        street: new FormControl('', [Validators.required, Validators.minLength(2), ShopValidators.notOnlyWhitespace]),
+        city: new FormControl('', [Validators.required, Validators.minLength(2), ShopValidators.notOnlyWhitespace]),
+        state: new FormControl('', [Validators.required]),
+        country: new FormControl('', [Validators.required]),
+        zipCode: new FormControl('', [Validators.required, Validators.minLength(2), ShopValidators.notOnlyWhitespace])
       }),
       creditCard: this.formBuilder.group({
-        cardType: [''],
-        nameOnCard: [''],
-        cardNumber: [''],
-        securityCode: [''],
+        cardType: new FormControl('', [Validators.required]),
+        nameOnCard: new FormControl('', [Validators.required, Validators.minLength(2), ShopValidators.notOnlyWhitespace]),
+        cardNumber: new FormControl('', [Validators.required, Validators.pattern('[0-9]{16}')]),
+        securityCode: new FormControl('', [Validators.required, Validators.pattern('[0-9]{3}')]),
         expirationMonth: [''],
         expirationYear: [''],
       })
@@ -126,6 +128,43 @@ export class CheckoutComponent implements OnInit {
     return this.checkoutFormGroup.get('shippingAddress.country');
   }
 
+  get billingAddressStreet() {
+    return this.checkoutFormGroup.get('billingAddress.street');
+  }
+
+  get billingAddressCity() {
+    return this.checkoutFormGroup.get('billingAddress.city');
+  }
+
+  get billingAddressState() {
+    return this.checkoutFormGroup.get('billingAddress.state');
+  }
+
+  get billingAddressZipCode() {
+    return this.checkoutFormGroup.get('billingAddress.zipCode');
+  }
+
+  get billingAddressCountry() {
+    return this.checkoutFormGroup.get('billingAddress.country');
+  }
+
+
+  get creditCardType() {
+    return this.checkoutFormGroup.get('creditCard.cardType');
+  }
+
+  get creditCardNameOnCard() {
+    return this.checkoutFormGroup.get('creditCard.nameOnCard');
+  }
+
+  get creditCardNumber() {
+    return this.checkoutFormGroup.get('creditCard.cardNumber');
+  }
+
+  get creditCardSecurityCode() {
+    return this.checkoutFormGroup.get('creditCard.securityCode');
+  }
+
 
   copyShippingAddressToBillingAddress(event) {
 
@@ -178,5 +217,14 @@ export class CheckoutComponent implements OnInit {
 
       formGroup.get('state').setValue(data[0]);
     });
+  }
+
+  private reviewCartDetails() {
+    this.cartService.totalQuantity.subscribe(
+      totalQuantity => this.totalQuantity = totalQuantity
+    );
+    this.cartService.totalPrice.subscribe(
+      totalPrice => this.totalPrice = totalPrice
+    );
   }
 }
