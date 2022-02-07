@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ProductListComponent } from './components/product-list/product-list.component';
 import { HttpClientModule } from '@angular/common/http';
-import { ProductServiceService } from './services/product-service.service';
+import { ProductService } from 'src/app/services/product-service';
 import { ProductCategoryMenuComponent } from './components/product-category-menu/product-category-menu.component';
 import { SearchComponent } from './components/search/search.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
@@ -33,7 +33,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     NgbModule,
     ReactiveFormsModule
   ],
-  providers: [ProductServiceService],
+  providers: [ProductService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ProductServiceService} from '../../services/product-service.service';
+import {ProductService} from 'src/app/services/product-service';
 import {Product} from '../../common/product';
 import {ActivatedRoute} from '@angular/router';
 import {CartItem} from 'src/app/common/cart-item';
@@ -24,7 +24,7 @@ export class ProductListComponent implements OnInit {
   previousKeyword: string = null;
 
 
-  constructor(private productService: ProductServiceService, private route: ActivatedRoute, private cartService: CartService) {
+  constructor(private productService: ProductService, private route: ActivatedRoute, private cartService: CartService) {
   }
 
   ngOnInit() {
