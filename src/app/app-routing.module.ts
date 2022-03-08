@@ -4,9 +4,14 @@ import {ProductListComponent} from './components/product-list/product-list.compo
 import {ProductDetailsComponent} from './components/product-details/product-details.component';
 import {CartDetailsComponent} from 'src/app/components/cart-details/cart-details.component';
 import {CheckoutComponent} from 'src/app/components/checkout/checkout.component';
+import {OktaCallbackComponent} from '@okta/okta-angular';
+import {LoginComponent} from 'src/app/components/login/login.component';
+
 
 
 const routes: Routes = [
+  {path: 'login/callback', component: OktaCallbackComponent},
+  {path: 'login', component: LoginComponent},
   {path: 'cart-details', component: CartDetailsComponent},
   {path: 'checkout', component: CheckoutComponent},
   {path: 'products/:id', component: ProductDetailsComponent},
