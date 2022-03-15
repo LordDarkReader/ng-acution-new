@@ -7,12 +7,14 @@ import {CheckoutComponent} from 'src/app/components/checkout/checkout.component'
 import {OktaAuthGuard, OktaCallbackComponent} from '@okta/okta-angular';
 import {LoginComponent} from 'src/app/components/login/login.component';
 import {MembersPageComponent} from 'src/app/components/members-page/members-page.component';
+import {OrderHistoryComponent} from 'src/app/components/order-history/order-history.component';
 
 
 
 const routes: Routes = [
   {path: 'login/callback', component: OktaCallbackComponent},
   {path: 'members', component: MembersPageComponent, canActivate: [OktaAuthGuard]},
+  {path: 'order-history', component: OrderHistoryComponent, canActivate: [OktaAuthGuard]},
   {path: 'login', component: LoginComponent},
   {path: 'cart-details', component: CartDetailsComponent},
   {path: 'checkout', component: CheckoutComponent},
