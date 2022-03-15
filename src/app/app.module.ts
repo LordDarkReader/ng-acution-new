@@ -19,9 +19,10 @@ import { LoginStatusComponent } from './components/login-status/login-status.com
 import {OKTA_CONFIG, OktaAuthModule} from '@okta/okta-angular';
 import {Router} from '@angular/router';
 import myAppConfig from 'src/app/config/my-app-config';
+import { MembersPageComponent } from './components/members-page/members-page.component';
 
 const oktaConfig = Object.assign({
-  onAuthRequired: (injector) => {
+  onAuthRequired: (oktaAuth, injector) => {
     const router = injector.get(Router);
     router.navigate(['/login']);
   }
@@ -38,7 +39,8 @@ const oktaConfig = Object.assign({
     CartDetailsComponent,
     CheckoutComponent,
     LoginComponent,
-    LoginStatusComponent
+    LoginStatusComponent,
+    MembersPageComponent
   ],
   imports: [
     BrowserModule,
