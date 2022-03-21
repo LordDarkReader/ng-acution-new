@@ -4,14 +4,15 @@ import {HttpClient} from '@angular/common/http';
 import {Country} from 'src/app/common/country';
 import {map} from 'rxjs/operators';
 import {State} from 'src/app/common/state';
+import {environment} from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppFormService {
 
-  private countriesUrl = 'http://localhost:8080/api/countries';
-  private statesUrl = 'http://localhost:8080/api/states';
+  private countriesUrl = environment.devApiUrl + '/countries';
+  private statesUrl = environment.devApiUrl + '/states';
 
   constructor(private httpClient: HttpClient) {
   }
